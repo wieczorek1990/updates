@@ -21,6 +21,8 @@ for server in $servers
     scp "./architectures/$host_architecture/Makefile" "$username@$host_name:Makefile"
     echo 'Running make...'
     ssh -t "$username@$host_name" "make update"
+    echo 'Cleaning...'
+    ssh -t "$username@$host_name" "rm Makefile"
     echo
 end
 echo 'Done.'
