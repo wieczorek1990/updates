@@ -2,21 +2,25 @@
 # Pushes the chosen Makefile script and runs it for correct architecture.
 
 set dir (status dirname)
-set username 'administrator'
 cd $dir/..
 
 echo 'Starting from: '(pwd)
+set username 'administrator'
+echo "Administrator name is: $username"
 set servers (cat servers.tsv)
-echo 'Loaded servers.'
+echo 'Loaded servers in count: '(count servers)
 echo
+
+echo 'Processing servers...'
 for server in $servers
-    set ip (echo $server | cut -d\t -f1)
-    set arch (echo $server | cut -d\t -f2)
-    echo "Architecture: $arch"
-    echo "IP: $ip"
-    echo 'Sending make script.'
-    scp "./architectures/$arch/Makefile" "$username@$ip:Makefile"
-    ssh -t "$username@$ip" "make install"
+    set host_name (echo $server | cut -d\t -f1)
+    set host_architecture (echo $server | cut -d\t -f2)
+    echo "Hostname: $host_name"
+    echo "Host architecture: $host_architecture"
+    echo 'Sending make script...'
+    scp "./architectures/$host_architecture/Makefile" "$username@$host_name:Makefile"
+    echo 'Running make...'
+    ssh -t "$username@$host_name" "make update"
     echo
 end
 echo 'Done.'
