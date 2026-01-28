@@ -10,7 +10,7 @@ set broadcast_ip "192.168.8.255"
 
 echo "Looking for MAC address $mac..."
 echo "Broadcasting..."
-ping $broadcast_ip -c 1
+ping $broadcast_ip -c 1 > /dev/null
 echo "Calling arp..."
 begin
     set -l IFS
@@ -20,7 +20,7 @@ echo "Looking for MAC address in arp result..."
 set ip_with_mac (echo $arp_result | grep $mac)
 if [ $status -eq 0 ]
     set ip (echo $ip_with_mac | cut -d' ' -f1)
-    echo "Found IP: $ip"
+    echo $ip
 else
     echo 'IP not found.'
     exit 1

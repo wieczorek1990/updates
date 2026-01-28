@@ -5,24 +5,47 @@ set dir (status dirname)
 cd $dir/..
 
 echo 'Starting from: '(pwd)
+
 set username 'administrator'
 echo "Administrator name is: $username"
+
 set servers (cat servers.tsv)
-echo 'Loaded servers in count: '(count servers)
+echo 'Loaded servers in count: '(count $servers)
+
 echo
 
 echo 'Processing servers...'
 for server in $servers
     set host_name (echo $server | cut -d\t -f1)
     set host_architecture (echo $server | cut -d\t -f2)
-    echo "Hostname: $host_name"
+    set host_mac (echo $server | cut -d\t -f3)
+
+    echo "Host name: $host_name"
     echo "Host architecture: $host_architecture"
+    echo "Host MAC address: $host_mac"
+
+    echo "Querying host..."
+    set host_ip (./bin/mac_to_ip.fish $host_mac | tail -n 1)
+    echo "Host IP address: $host_ip"
+
+    if [ $status -ne 0 ]
+        echo "Failed to query host $host_name..."
+        continue
+    end
+
+    echo "Setting DSN..."
+    set dsn "$username@$host_ip"
+    echo "DSN is $dsn"
+
     echo 'Sending make script...'
-    scp "./architectures/$host_architecture/Makefile" "$username@$host_name:Makefile"
+    scp "./architectures/$host_architecture/Makefile" "$dsn:Makefile"
+
     echo 'Running make...'
-    ssh -t "$username@$host_name" "make update"
+    ssh -t "$dsn" "make update"
+
     echo 'Cleaning...'
-    ssh -t "$username@$host_name" "rm Makefile"
+    ssh -t "$dsn" "rm Makefile"
+
     echo
 end
 echo 'Done.'
