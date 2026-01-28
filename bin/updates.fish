@@ -24,12 +24,11 @@ for server in $servers
     echo "Host architecture: $host_architecture"
     echo "Host MAC address: $host_mac"
 
-    echo "Querying host..."
+    echo "Querying host through MAC address to IP..."
     set ip_result (./bin/mac_to_ip.fish $host_mac)
-    set ip_result_status $status
 
-    if [ $ip_result_status -ne 0 ]
-        echo "Failed to query host $host_name..."
+    if [ $status -ne 0 ]
+        echo "Failed to query host: $host_name..."
         continue
     else
         set host_ip (echo $ip_result | tail -n 1)
