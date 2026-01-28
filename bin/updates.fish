@@ -51,4 +51,6 @@ for server in $servers
 
     echo
 end
+
+echo
 echo 'Done.'

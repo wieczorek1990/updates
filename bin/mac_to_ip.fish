@@ -13,12 +13,13 @@ begin
     set -l IFS
     set arp_result (arp -a | cut -d' ' -f2,4 | sed 's/(//;s/)//')
 end
+
 set ip_with_mac (echo $arp_result | grep $mac)
 
 if [ $status -eq 0 ]
     set ip (echo $ip_with_mac | cut -d' ' -f1)
+
     echo $ip
 else
-    echo 'Error: IP not found.'
     exit 1
 end
