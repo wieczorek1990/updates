@@ -5,5 +5,5 @@ if [ $status -eq 0 ]
     echo "No updates needed."
 else
     echo "Updates available."
-    sudo reboot
+    reboot
 end

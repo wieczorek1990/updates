@@ -1,5 +1,5 @@
 #!/usr/bin/env fish
-# Pushes the chosen Makefile script and runs it for correct architecture.
+# Pushes the chosen scripts and runs them for correct architecture.
 
 set dir (status dirname)
 cd $dir/..
@@ -8,6 +8,9 @@ echo "Starting from: "(pwd)
 
 set username "administrator"
 echo "Administrator name is:" $username
+
+echo "$username password is: "
+read password
 
 set servers (cat servers.tsv)
 echo "Loaded servers in count:" (count $servers)
@@ -28,29 +31,32 @@ for server in $servers
     set ip_result (./bin/mac_to_ip.fish $host_mac)
     if [ $status -ne 0 ]
         echo "Failed to query host:" $host_name
-        fish
         exit 1
     end
     set host_ip (echo $ip_result | tail -n 1)
     echo "Host IP address:" $host_ip
 
-    echo "Setting DSN..."
-    set dsn "$username@$host_ip"
-    echo "DSN is $dsn"
+    echo "Setting account detaiils..."
+    set account_details "$username@$host_ip"
+    echo "Account details are $account_details"
 
     echo "Sending make script..."
-    scp "./architectures/$host_architecture/Makefile" "$dsn:Makefile"
-    echo "Sending bin scripts..."
-    scp "./architectures/$host_architecture/needs_restarting.fish" "$dsn:needs_restarting.fish"
+    sshpass -p $password scp \
+        "./architectures/$host_architecture/Makefile" \
+        "$account_details:Makefile"
+
+    echo "Sending scripts..."
+    sshpass -p $password scp \
+        "./architectures/$host_architecture/needs_restarting.fish" \
+        "$account_details:needs_restarting.fish"
 
     echo "Running updates..."
-    ssh -t "$dsn" "make update"
+    sshpass -p $password ssh "$account_details" "make update password=$password"
 
     echo "Running needs-restarting..."
-    ssh -t "$dsn" "make needs-restarting"
+    sshpass -p $password ssh "$account_details" "make needs-restarting password=$password"
 
     echo
 end
 
-echo
 echo "Done."

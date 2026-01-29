@@ -1,8 +1,8 @@
 init:
-	sudo xcode-select --install
+	echo $(password) | sudo -S xcode-select --install
 
 update:
-	sudo softwareupdate --background
+	echo $(password) | sudo -S softwareupdate --background
 
 needs-restarting:
-	/usr/bin/env fish ./needs_restarting.fish
+	echo $(password) | sudo -S fish ./needs_restarting.fish

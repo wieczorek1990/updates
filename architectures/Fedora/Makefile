@@ -1,8 +1,8 @@
 init:
-	sudo dnf install --assumeyes make
+	echo $(password) | sudo -S dnf install --assumeyes make
 
 update:
-	sudo dnf upgrade --assumeyes --refresh
+	echo $(password) | sudo -S dnf upgrade --assumeyes --refresh
 
 needs-restarting:
-	/usr/bin/env fish ./needs_restarting.fish
+	echo $(password) | sudo -S fish ./needs_restarting.fish
