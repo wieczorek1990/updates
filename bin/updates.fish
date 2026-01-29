@@ -40,6 +40,8 @@ for server in $servers
 
     echo "Sending make script..."
     scp "./architectures/$host_architecture/Makefile" "$dsn:Makefile"
+    echo "Sending bin scripts..."
+    scp "./architectures/$host_architecture/needs_restarting.fish" "$dsn:needs_restarting.fish"
 
     echo "Running updates..."
     ssh -t "$dsn" "make update"
@@ -48,7 +50,7 @@ for server in $servers
     ssh -t "$dsn" "make needs-restarting"
 
     echo 'Cleaning...'
-    ssh -t "$dsn" "rm Makefile"
+    ssh -t "$dsn" "rm Makefile needs_restarting.fish"
 
     echo
 end

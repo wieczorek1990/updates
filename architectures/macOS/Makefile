@@ -5,4 +5,4 @@ update:
 	sudo softwareupdate --background
 
 needs-restarting:
-	echo "Not implemented."
+	/usr/bin/env fish ./needs_restarting.fish
