@@ -49,9 +49,6 @@ for server in $servers
     echo "Running needs-restarting..."
     ssh -t "$dsn" "make needs-restarting"
 
-    echo 'Cleaning...'
-    ssh -t "$dsn" "rm Makefile needs_restarting.fish"
-
     echo
 end
 
