@@ -20,20 +20,19 @@ for server in $servers
     set host_architecture (echo $server | cut -d\t -f2)
     set host_mac (echo $server | cut -d\t -f3)
 
-    echo "Host name: $host_name"
-    echo "Host architecture: $host_architecture"
-    echo "Host MAC address: $host_mac"
+    echo "Host name:" $host_name
+    echo "Host architecture:" $host_architecture
+    echo "Host MAC address:" $host_mac
 
     echo "Querying host through MAC address to IP..."
-    set ip_result (./bin/mac_to_ip.fish $host_mac)
-
+    set ip_result (./bin/mac_to_ip.fish "$host_mac")
     if [ $status -ne 0 ]
-        echo "Failed to query host: $host_name"
-        continue
-    else
-        set host_ip (echo $ip_result | tail -n 1)
-        echo "Host IP address: $host_ip"
+        echo "Failed to query host:" $host_name
+        fish
+        exit 1
     end
+    set host_ip (echo $ip_result | tail -n 1)
+    echo "Host IP address:" $host_ip
 
     echo "Setting DSN..."
     set dsn "$username@$host_ip"

@@ -15,11 +15,11 @@ begin
 end
 
 set ip_with_mac (echo $arp_result | grep $mac)
-
-if [ $status -eq 0 ]
-    set ip (echo $ip_with_mac | cut -d' ' -f1)
-
-    echo $ip
-else
+if [ $status -ne 0 ]
     exit 1
 end
+
+set ip (echo $ip_with_mac | cut -d' ' -f1)
+
+# Result
+echo $ip
