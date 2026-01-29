@@ -5,6 +5,7 @@ set dir (status dirname)
 cd $dir/..
 
 echo "Starting from: "(pwd)
+echo "Running as:" (whoami)
 
 set username "administrator"
 echo "Administrator name is:" $username
@@ -38,7 +39,7 @@ for server in $servers
 
     echo "Setting account detaiils..."
     set account_details "$username@$host_ip"
-    echo "Account details are $account_details"
+    echo "Account details are:" $account_details
 
     echo "Sending make script..."
     sshpass -p $password scp \
