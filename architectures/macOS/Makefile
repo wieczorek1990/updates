@@ -3,3 +3,6 @@ init:
 
 update:
 	sudo softwareupdate --background
+
+needs-restarting:
+	echo "Not implemented."
