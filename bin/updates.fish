@@ -28,7 +28,7 @@ for server in $servers
     set ip_result (./bin/mac_to_ip.fish $host_mac)
 
     if [ $status -ne 0 ]
-        echo "Failed to query host: $host_name..."
+        echo "Failed to query host: $host_name"
         continue
     else
         set host_ip (echo $ip_result | tail -n 1)
