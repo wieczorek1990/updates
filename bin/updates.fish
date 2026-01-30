@@ -45,7 +45,7 @@ for server in $servers
     set host_ip (echo $ip_result | tail -n 1)
     echo "Host IP address:" $host_ip
 
-    echo "Setting account detaiils..."
+    echo "Setting account details..."
     set account_details "$username@$host_ip"
     echo "Account details are:" $account_details
 
