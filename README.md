@@ -5,8 +5,8 @@ This is a updates script for Fedora and macOS.
 
 ## Running
 
-```
-make updates
+```fish
+make servers=servers.tsv run
 ```
 
 ### Data

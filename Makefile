@@ -1,2 +1,2 @@
-updates:
-	./bin/updates.fish
+run:
+	./bin/updates.fish $(servers)

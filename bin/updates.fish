@@ -1,10 +1,18 @@
 #!/usr/bin/env fish
-# Pushes the chosen scripts and runs them for correct architecture.
+# Pushes the chosen updates scripts and runs them for correct architecture.
 
 set dir (status dirname)
 cd $dir/..
 
-echo "Starting from: "(pwd)
+set argc (count $argv)
+if [ $argc -ne 1 ]
+    echo -e "Usage:\tupdates.fish <servers.tsv>"
+    exit 1
+end
+set servers_file $argv[1]
+echo "Servers file is:" $servers_file
+
+echo "Starting from:" (pwd)
 echo "Running as:" (whoami)
 
 set username "administrator"
@@ -13,7 +21,7 @@ echo "Administrator name is:" $username
 echo "$username password is: "
 read --silent password
 
-set servers (cat servers.tsv)
+set servers (cat $servers_file)
 echo "Loaded servers in count:" (count $servers)
 
 echo
