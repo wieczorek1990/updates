@@ -1,6 +1,6 @@
 init:
 	echo $(password) | sudo -S dnf install --assumeyes make fish
-	echo $(password) | sudo ln -fs /usr/bin/fish /usr/local/bin/fish
+	echo $(password) | sudo -S ln -fs /usr/bin/fish /usr/local/bin/fish
 
 update:
 	echo $(password) | sudo -S dnf upgrade --assumeyes --refresh
