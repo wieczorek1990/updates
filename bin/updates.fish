@@ -11,7 +11,7 @@ set username "administrator"
 echo "Administrator name is:" $username
 
 echo "$username password is: "
-read password
+read --silent password
 
 set servers (cat servers.tsv)
 echo "Loaded servers in count:" (count $servers)
