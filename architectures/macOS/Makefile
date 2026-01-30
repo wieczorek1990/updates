@@ -5,4 +5,4 @@ update:
 	echo $(password) | sudo -S softwareupdate --background
 
 needs-restarting:
-	echo $(password) | sudo -S fish ./needs_restarting.fish
+	echo $(password) | sudo -S /usr/local/bin/fish ./needs_restarting.fish
