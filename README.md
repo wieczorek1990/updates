@@ -3,6 +3,9 @@ updates
 
 This is a updates script for Fedora and macOS.
 
+## Dependencies
+* [sshpass](https://github.com/kevinburke/sshpass)
+
 ## Running
 
 ```fish

@@ -20,6 +20,7 @@ echo "Administrator name is:" $username
 
 echo "$username password is: "
 read --silent password
+export SSHPASS="$password"
 
 set servers (cat $servers_file)
 echo "Loaded servers in count:" (count $servers)
@@ -50,20 +51,20 @@ for server in $servers
     echo "Account details are:" $account_details
 
     echo "Sending make script..."
-    sshpass -p $password scp \
+    sshpass -e scp \
         "./architectures/$host_architecture/Makefile" \
         "$account_details:Makefile"
 
     echo "Sending scripts..."
-    sshpass -p $password scp \
+    sshpass -e scp \
         "./architectures/$host_architecture/needs_restarting.fish" \
         "$account_details:needs_restarting.fish"
 
     echo "Running updates..."
-    sshpass -p $password ssh "$account_details" "make update password=$password"
+    sshpass -e ssh "$account_details" "make update password=$password"
 
     echo "Running needs-restarting..."
-    sshpass -p $password ssh "$account_details" "make needs-restarting password=$password"
+    sshpass -e ssh "$account_details" "make needs-restarting password=$password"
 
     echo
 end

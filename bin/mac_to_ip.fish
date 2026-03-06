@@ -7,7 +7,7 @@ if [ $argc -ne 1 ]
 end
 set mac $argv[1]
 # TODO(lukaszwieczorek): Implement.
-set broadcast_ip "192.168.8.255"
+set broadcast_ip "192.168.0.255"
 
 ping $broadcast_ip -c 1 > /dev/null
 begin
